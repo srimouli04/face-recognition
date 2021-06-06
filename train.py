@@ -86,10 +86,10 @@ def TrainModel(model, criterion, optimizer, sched, num_epochs=5):
     
     return model
 
-class Arcloss(nn.Module):
+class Focalloss(nn.Module):
 
     def __init__(self, gamma=0, eps=1e-7):
-        super(Arcloss, self).__init__()
+        super(Focalloss, self).__init__()
         self.gamma = gamma
         self.eps = eps
         self.ce = torch.nn.CrossEntropyLoss()
@@ -182,7 +182,7 @@ num_ftrs = model_ft.fc.in_features
 model_ft.fc = nn.Linear(num_ftrs, len(class_names))
 
 
-criterion =  Arcloss(gamma=2)
+criterion =  Focalloss(gamma=2)
 
 model_ft.to(device)
 model_ft = DataParallel(model_ft)
